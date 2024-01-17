@@ -214,7 +214,6 @@ def main():
 
         if snake.flag:
             snake.reset(screen)
-            print("DONE")
 
         pygame.display.update()
 
