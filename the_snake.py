@@ -158,22 +158,19 @@ def handle_keys(game_object: Snake):
     """Функция обработки действий пользователя: нажатие клавиш,
     изменяя направление движения змейки.
     """
+    direct_keys = {(pygame.K_UP, LEFT): UP, (pygame.K_UP, RIGHT): UP,
+                   (pygame.K_DOWN, LEFT): DOWN, (pygame.K_DOWN, RIGHT): DOWN,
+                   (pygame.K_LEFT, UP): LEFT, (pygame.K_LEFT, DOWN): LEFT,
+                   (pygame.K_RIGHT, UP): RIGHT, (pygame.K_RIGHT, DOWN): RIGHT}
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            return
-            # raise SystemExit
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and game_object.direction != DOWN:
-                game_object.next_direction = UP
-            elif event.key == pygame.K_DOWN and game_object.direction != UP:
-                game_object.next_direction = DOWN
-            elif event.key == pygame.K_LEFT and game_object.direction != RIGHT:
-                game_object.next_direction = LEFT
-            elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
-                game_object.next_direction = RIGHT
+            return False
 
-       
+        elif event.type == pygame.KEYDOWN and (
+                event.key, game_object.direction) in direct_keys:
+            game_object.next_direction = direct_keys[(
+                event.key, game_object.direction)]
 
 
 def main():
@@ -185,7 +182,10 @@ def main():
     while True:
         clock.tick(SPEED)
 
-        handle_keys(snake)
+        if not handle_keys(snake):
+            pygame.quit()
+            return
+
         snake.update_direction()
 
         apple.draw(screen)
