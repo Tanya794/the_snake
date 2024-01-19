@@ -93,13 +93,6 @@ class Snake(GameObject):
 
     def draw(self, surface) -> None:
         """Метод отрисовывает змейку на экране, затирая след."""
-        for position in self.positions[:-1]:
-            rect = (
-                pygame.Rect((position[0], position[1]), (GRID_SIZE, GRID_SIZE))
-            )
-            pygame.draw.rect(surface, self.body_color, rect)
-            pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
-
         # Отрисовка головы змейки
         head_rect = pygame.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(surface, self.body_color, head_rect)
@@ -168,7 +161,8 @@ def handle_keys(game_object: Snake):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            raise SystemExit
+            return
+            # raise SystemExit
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP and game_object.direction != DOWN:
                 game_object.next_direction = UP
