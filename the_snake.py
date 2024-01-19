@@ -173,6 +173,8 @@ def handle_keys(game_object: Snake):
             elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
                 game_object.next_direction = RIGHT
 
+       
+
 
 def main():
     """Основная функция запуска игры."""
