@@ -64,8 +64,7 @@ class Snake(GameObject):
     def __init__(self) -> None:
         super().__init__(BOARD_CENTRE, SNAKE_COLOR)
         self.length = 1
-        self.positions: list = []
-        self.positions.append(self.position)
+        self.positions: list = [self.position]
         self.direction = RIGHT
         self.next_direction = None
         self.last = None
@@ -188,9 +187,6 @@ def main():
 
         snake.update_direction()
 
-        apple.draw(screen)
-        snake.draw(screen)
-
         snake.move()
 
         head = snake.get_head_position()
@@ -204,6 +200,9 @@ def main():
             apple.position = apple.randomize_position()
         else:
             snake.last = snake.positions.pop()
+
+        apple.draw(screen)
+        snake.draw(screen)
 
         pygame.display.update()
 
